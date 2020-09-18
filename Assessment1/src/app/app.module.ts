@@ -1,8 +1,8 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { DataTableModule } from 'ng-angular8-datatable';
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
@@ -11,13 +11,16 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { AuditComponent } from './audit';
+import { FilterPipe } from './_pipes/searching.pipe';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        FormsModule,
         HttpClientModule,
-        appRoutingModule
+        appRoutingModule,
+        DataTableModule
     ],
     declarations: [
         AppComponent,
@@ -25,7 +28,8 @@ import { AuditComponent } from './audit';
         LoginComponent,
         RegisterComponent,
         AuditComponent,
-        AlertComponent
+        AlertComponent,
+        FilterPipe
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

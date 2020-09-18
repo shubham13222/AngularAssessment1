@@ -1,4 +1,4 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
+<!-- <h1>Hi {{currentUser.firstName}}!</h1>
 <p>You're logged in with Angular 8!!</p>
 <h3>All login audit :</h3>
 <ul>
@@ -9,6 +9,52 @@
         <br/>Logout - {{audit.logoutTime}}
         <br/>IP - {{audit.ip}}
     </li>
-   
-    
-</ul>
+
+</ul> -->
+
+
+<!-- <h1>Hi {{currentUser.firstName}}!</h1> -->
+<h1>Hi</h1>
+<p>You're logged in with Angular 8!!</p>
+<label>Select date format</label>
+<select (change) = "setDateFormat($event.target.value)">
+    <option disabled>Select format</option>
+    <option *ngFor = "let hrs of dateFormateObject" [value] = "hrs.id">{{hrs.text}}</option>
+</select><br/>
+<label>Search According to Id :</label>
+<input
+        type="text"
+        name="searchString"
+        placeholder="Type to search..."
+        [(ngModel)]="searchString"
+      />
+<h3>All login audit :</h3>
+<table class="table table-striped" [svData]="audits" #sv="svDataTable" [svRowsOnPage]="5" svSortBy="name" svSortOrder="asc">
+    <thead>
+    <tr>
+        <th>
+            <sv-default-sorter by="name">User</sv-default-sorter>
+        </th>
+        <th>Id</th>
+        <th>Login Time</th>
+        <th>Logout Time</th>
+        <th>Ip</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of sv.data | filter : '_id' : searchString; let i = index">
+        <td>{{ item.user }}</td>
+        <td>{{ item._id }}</td>
+        <td class="text-right">{{ item.loginTime | date : dateFormate }}</td>
+        <td>{{ item.logoutTime | date : dateFormate }}</td>
+        <td>{{ item.ip }}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+        </td>
+    </tr>
+    </tfoot>
+</table>

@@ -8,6 +8,7 @@ import { UserService, AuthenticationService } from '@/_services';
 export class HomeComponent implements OnInit {
     currentUser: User;
     users = [];
+    search : string;
 
     constructor(
         private authenticationService: AuthenticationService,

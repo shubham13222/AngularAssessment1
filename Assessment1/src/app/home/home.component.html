@@ -1,10 +1,45 @@
 ﻿<h1>Hi {{currentUser.firstName}}!</h1>
 <p>You're logged in!!</p>
 <h3>All registered users:</h3>
-<ul>
+<!-- <ul>
     <li *ngFor="let user of users">
         {{user.username}} ({{user.firstName}} {{user.lastName}})
         <br/><span class="badge badge-secondary">{{user.role}}</span>
         <br/><a (click)="deleteUser(user.id)" class="badge badge-danger" *ngIf="currentUser.role == 'Auditor'">Delete</a>
     </li>
-</ul>
+</ul> -->
+<label>Search According to UserName :</label>
+<input
+        type="text"
+        name="searchString"
+        placeholder="Type to search..."
+        [(ngModel)]="search"
+      />
+
+<table class="table table-striped" [svData]="users" #sv="svDataTable" [svRowsOnPage]="5" svSortBy="name" svSortOrder="asc">
+    <thead>
+    <tr>
+        <th>
+            <sv-default-sorter by="name">Username</sv-default-sorter>
+        </th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of sv.data | filter : 'username' : search; let i = index">
+        <td>{{ item.username }}</td>
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td><a (click)="deleteUser(user.id)" class="badge badge-danger" *ngIf="currentUser.role == 'Auditor'">Delete</a></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+        </td>
+    </tr>
+    </tfoot>
+</table>
